@@ -1,0 +1,29 @@
+#CloneRepo
+git clone https://github.com/your-org/azure-k8s-cost-dashboard.git
+cd azure-k8s-cost-dashboard
+
+#SetVariables
+RESOURCE_GROUP="k8s-cost-rg"
+LOCATION="eastus"
+
+#CreateRG
+az group create --name $RESOURCE_GROUP --location $LOCATION
+
+#deploy workbook
+az deployment group create \
+  --resource-group $RESOURCE_GROUP \
+  --template-file workbook.bicep \
+  --parameters location=$LOCATION
+
+#deploy dashboard
+WORKBOOK_ID=$(az resource show \
+  --resource-group $RESOURCE_GROUP \
+  --resource-type Microsoft.Insights/workbooks \
+  --name aks-cost-by-namespace-wb \
+  --query id -o tsv)
+
+az deployment group create \
+  --resource-group $RESOURCE_GROUP \
+  --template-file dashboard.bicep \
+  --parameters location=$LOCATION workbookResourceId=$WORKBOOK_ID
+
