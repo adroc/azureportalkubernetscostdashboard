@@ -1,5 +1,5 @@
 #CloneRepo
-git clone https://github.com/azureportalkubernetscostdashboard/azure-k8s-cost-dashboard.git
+git clone https://github.com/adroc/azureportalkubernetscostdashboard/azure-k8s-cost-dashboard.git
 cd azure-k8s-cost-dashboard
 
 #SetVariables
