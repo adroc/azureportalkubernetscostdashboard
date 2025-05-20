@@ -1,6 +1,7 @@
 #CloneRepo
 git clone https://github.com/adroc/azureportalkubernetscostdashboard/azure-k8s-cost-dashboard.git
-cd azure-k8s-cost-dashboard
+#cd azure-k8s-cost-dashboard
+cd azureportalkubernetscostdashboard/
 
 #SetVariables
 RESOURCE_GROUP="k8s-cost-rg"
