@@ -14,14 +14,10 @@ az group create --name $RESOURCE_GROUP --location $LOCATION
 az deployment group create \
   --resource-group $RESOURCE_GROUP \
   --template-file workbook.bicep \
-  --parameters location=$LOCATION
+  --parameters location=$LOCATION 
 
 #deploy dashboard
-WORKBOOK_ID=$(az resource show \
-  --resource-group $RESOURCE_GROUP \
-  --resource-type Microsoft.Insights/workbooks \
-  --name aks-cost-by-namespace-wb \
-  --query id -o tsv)
+WORKBOOK_ID=$(az resource show --resource-group $RESOURCE_GROUP --resource-type Microsoft.Insights/workbooks --name 4675e660-3b8f-42ea-83e6-52ba83714d97 --query id -o tsv); echo $WORKBOOD_ID
 
 az deployment group create \
   --resource-group $RESOURCE_GROUP \
