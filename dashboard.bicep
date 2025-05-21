@@ -6,11 +6,11 @@ resource dashboard 'Microsoft.Portal/dashboards@2020-09-01-preview' = {
   name: dashboardName
   location: location
   properties: {
-    lenses: {
-      "0": {
+    lenses: [
+      {
         order: 0
-        parts: {
-          "0": {
+        parts: [
+          {
             position: {
               x: 0
               y: 0
@@ -20,11 +20,11 @@ resource dashboard 'Microsoft.Portal/dashboards@2020-09-01-preview' = {
             metadata: {
               inputs: [
                 {
-                  name: "resourceId"
+                  name: 'resourceId'
                   value: workbookResourceId
                 }
               ]
-              type: "Extension/HubsExtension/PartType/Workbook"
+              type: 'Extension/HubsExtension/PartType/Workbook'
               settings: {
                 content: {
                   settings: {
@@ -35,18 +35,19 @@ resource dashboard 'Microsoft.Portal/dashboards@2020-09-01-preview' = {
               }
             }
           }
-        }
+        ]
       }
-    }
+    ]
     metadata: {
       model: {
         timeRange: {
           value: {
-            relative: "24h"
+            relative: '24h'
           }
-          type: "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+          type: 'MsPortalFx.Composition.Configuration.ValueTypes.TimeRange'
         }
       }
     }
   }
 }
+
