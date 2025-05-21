@@ -1,3 +1,5 @@
+#Prereqs.... Bash,  Az CLI, bicep
+
 #CloneRepo
 git clone https://github.com/adroc/azureportalkubernetscostdashboard/azure-k8s-cost-dashboard.git
 #cd azure-k8s-cost-dashboard
@@ -10,17 +12,21 @@ LOCATION="eastus"
 #CreateRG
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
+#create a uuid 
+$WORKBOOKNAME=$(uuidgen)
+echo $WORKBOOKNAME
+
+#edit workbook.bicep file adding the WORKBOOKNAME from above. 
+#param workbookName string = '4675e660-3b8f-42ea-83e6-52ba83714d97'
+
+bicep build workbook.bicep
 #deploy workbook
-az deployment group create \
-  --resource-group $RESOURCE_GROUP \
-  --template-file workbook.bicep \
-  --parameters location=$LOCATION 
+az deployment group create --resource-group $RESOURCE_GROUP --template-file workbook.bicep --parameters location=$LOCATION 
 
-#deploy dashboard
-WORKBOOK_ID=$(az resource show --resource-group $RESOURCE_GROUP --resource-type Microsoft.Insights/workbooks --name 4675e660-3b8f-42ea-83e6-52ba83714d97 --query id -o tsv); echo $WORKBOOK_ID
 
-az deployment group create \
-  --resource-group $RESOURCE_GROUP \
-  --template-file dashboard.bicep \
-  --parameters location=$LOCATION workbookResourceId=$WORKBOOK_ID
+#deploy dashboard MODIFY THE NAME WITH THE WORKBOOKNAME UUID.
+WORKBOOK_ID=$(az resource show --resource-group $RESOURCE_GROUP --resource-type Microsoft.Insights/workbooks --name $WORKBOOKNAME --query id -o tsv); echo $WORKBOOK_ID
+
+bicep build dashboard.bicep
+az deployment group create --resource-group $RESOURCE_GROUP --template-file dashboard.bicep --parameters location=$LOCATION workbookResourceId=$WORKBOOK_ID
 
